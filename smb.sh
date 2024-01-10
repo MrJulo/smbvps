@@ -111,11 +111,6 @@ else
        sysctl -p
 fi
 
-
-#禁用密码登陆vps
-sed -i 's/^PasswordAuthentication yes$/PasswordAuthentication no/' /etc/ssh/sshd_config
-service ssh restart
-
 #安装transmission
 
 echo "检查transmission-daemon是否安装"
