@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebDAV 文件管理</title>
+</head>
+<body>
+
+<!-- 上传文件按钮 -->
+<input type="file" id="fileInput">
+<button onclick="uploadFile()">上传文件</button>
+
+<!-- 删除文件按钮 
+<input type="text" id="deleteFileName" placeholder="要删除的文件名">
+<button onclick="deleteFile()">删除文件</button>
+-->
+<script>
+    function uploadFile() {
+        var fileInput = document.getElementById('fileInput');
+        var file = fileInput.files[0];
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('PUT', 'https://a.sanmaoban.buzz:8058/webdav/uploads/' + file.name, true);
+        xhr.setRequestHeader('Content-Type', file.type);
+        xhr.send(file);
+
+        xhr.onload = function() {
+            if (xhr.status === 201) {
+                alert('文件上传成功!');
+            } else {
+                alert('文件上传失败。');
+            }
+        };
+    }
+<!--
+    function deleteFile() {
+        var deleteFileName = document.getElementById('deleteFileName').value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('DELETE', 'https://a.sanmaoban.buzz:8058/webdav/' + deleteFileName, true);
+        xhr.send();
+
+        xhr.onload = function() {
+            if (xhr.status === 204) {
+                alert('文件删除成功!');
+            } else {
+                alert('文件删除失败。');
+            }
+        };
+    }
+-->
+</script>
+
+</body>
+</html>
