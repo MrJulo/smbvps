@@ -112,6 +112,7 @@ else
 fi
 
 #禁用密码连接ssh
+# 检查文件是否存在
 if [ -e /etc/ssh/sshd_config ]; then
     # 检查文件中是否包含 "PasswordAuthentication yes"
     if grep -q "^PasswordAuthentication yes$" /etc/ssh/sshd_config; then
@@ -120,6 +121,15 @@ if [ -e /etc/ssh/sshd_config ]; then
     else
         # 如果不包含，则在文件末尾追加
         echo "PasswordAuthentication no" | sudo tee -a /etc/ssh/sshd_config
+    fi
+
+    # 检查文件中是否包含 "PubkeyAuthentication yes"
+    if grep -q "^PubkeyAuthentication no$" /etc/ssh/sshd_config; then
+        # 如果包含，则用 sed 替换
+        sed -i 's/^PubkeyAuthentication no$/PubkeyAuthentication yes/' /etc/ssh/sshd_config
+    else
+        # 如果不包含，则在文件末尾追加
+        echo "PubkeyAuthentication yes" | sudo tee -a /etc/ssh/sshd_config
     fi
 else
     echo "Error: /etc/ssh/sshd_config not found."
