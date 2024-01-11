@@ -111,6 +111,21 @@ else
        sysctl -p
 fi
 
+#禁用密码连接ssh
+if [ -e /etc/ssh/sshd_config ]; then
+    # 检查文件中是否包含 "PasswordAuthentication yes"
+    if grep -q "^PasswordAuthentication yes$" /etc/ssh/sshd_config; then
+        # 如果包含，则用 sed 替换
+        sed -i 's/^PasswordAuthentication yes$/PasswordAuthentication no/' /etc/ssh/sshd_config
+    else
+        # 如果不包含，则在文件末尾追加
+        echo "PasswordAuthentication no" | sudo tee -a /etc/ssh/sshd_config
+    fi
+else
+    echo "Error: /etc/ssh/sshd_config not found."
+fi
+service ssh restart
+
 #安装transmission
 
 echo "检查transmission-daemon是否安装"
