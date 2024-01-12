@@ -31,6 +31,6 @@ read -p "Enter the number of the item you want to move: " selection
 selected_item=$(ls -A "$source_directory" | sed -n "${selection}p")
 
 # 移动文件或文件夹到目标目录，显示进度条
-rsync -ah --progress "$source_directory/$selected_item" "$destination_directory"
+rsync -ah --progress --verbose "$source_directory/$selected_item" "$destination_directory"
 
 echo "Item moved successfully to $destination_folder_name!"
