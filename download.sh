@@ -3,7 +3,7 @@
 echo "请输入要下载的URL（输入 'e' 退出）："
 read url
 
-if [ "$url" == "e" ]; then
+if [ "$url" = "e" ]; then
     echo "用户选择退出。"
     exit 1
 fi
