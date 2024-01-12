@@ -32,5 +32,5 @@ selected_item=$(ls -A "$source_directory" | sed -n "${selection}p")
 
 # 移动文件或文件夹到目标目录，显示进度条
 rsync -ah --progress "$source_directory/$selected_item" "$destination_directory"
-
+#
 echo "Item moved successfully to $destination_folder_name!"
