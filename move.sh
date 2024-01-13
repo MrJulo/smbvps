@@ -33,5 +33,5 @@ selected_item=$(ls -A "$source_directory" | sed -n "${selection}p")
 # 移动文件或文件夹到目标目录，显示进度条
 #nohup rsync -ah --progress --remove-source-files "$source_directory/$selected_item" "$destination_directory" > nohup.out 2>&1 &
 # --remove-source-files为复制文件到目标后删除源文件即移动文件
-nohup { rsync -ah --progress --remove-source-files "$source_directory/$selected_item" "$destination_directory" && echo "Item moved successfully to $destination_folder_name!"; } > nohup.out 2>&1 &
+nohup (rsync -ah --progress --remove-source-files "$source_directory/$selected_item" "$destination_directory" && echo "Item moved successfully to $destination_folder_name!") > nohup.out 2>&1 &
 #echo "Item moved successfully to $destination_folder_name!"
