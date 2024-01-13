@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 查找与 move.sh 相关的进程组并终止
-pids=$(ps aux | grep 'rsync' | grep -v 'grep' | awk '{print $2}')
+pids=$(ps aux | grep '[r]sync' | grep -v 'grep' | awk '{print $2}')
 
 if [ -n "$pid" ]; then
     echo "Terminating process with PID: $pid"
