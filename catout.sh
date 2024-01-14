@@ -6,6 +6,13 @@ directory="$(dirname "$0")"
 # 获取目录下所有以 "out" 开头的文件
 files=("$directory"/out*)
 
+# 如果只有一个文件，直接执行 cat
+if [ ${#files[@]} -eq 1 ]; then
+    echo "Only one file found. Displaying content of ${files[0]}:"
+    cat "${files[0]}"
+    exit 0
+fi
+
 # 显示文件列表和第二行内容
 echo "Available files:"
 
@@ -29,6 +36,7 @@ while true; do
         selected_file="${files[$((selection-1))]}"
         echo "Content of ${selected_file}:"
         cat "$selected_file"  # 直接使用 cat 命令显示文件内容
+        exit 0
     else
         echo "Invalid selection. Please enter a valid file number or 'q' to quit."
     fi
