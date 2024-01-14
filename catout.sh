@@ -28,7 +28,7 @@ while true; do
     if [ "$selection" -ge 1 ] && [ "$selection" -le "${#files[@]}" ]; then
         selected_file="${files[$((selection-1))]}"
         echo "Content of ${selected_file}:"
-        sed -n '2p' "$selected_file"  # 显示第二行内容
+        cat "$selected_file"  # 直接使用 cat 命令显示文件内容
     else
         echo "Invalid selection. Please enter a valid file number or 'q' to quit."
     fi
