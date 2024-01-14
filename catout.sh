@@ -27,7 +27,7 @@ done
 # 循环提示用户输入
 while true; do
     # 提示用户输入要查看的文件编号或回车退出
-    read -p "Enter the number of the file you want to view, or press Enter to quit: " selection
+    read -p $"\nEnter the number of the file you want to view, or press Enter to quit: " selection
 
     # 检查用户是否输入编号
     if [ -z "$selection" ]; then
