@@ -1,7 +1,7 @@
 #!/bin/bash
 
 fixed_path="/var/lib/transmission-daemon/downloads/"
-fixed_options="--allow-other --vfs-cache-mode writes --vfs-cache-max-size 5G --buffer-size 32M --umask 000"
+fixed_options="--allow-other --vfs-cache-mode writes --vfs-cache-max-size 1G --buffer-size 32M --umask 000"
 services=("disk-m" "disk1" "disk2" "disk3" "disk4" "disk5")
 for service in "${services[@]}"; do
     if [ -d "$fixed_path$service" ]; then
