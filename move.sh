@@ -38,5 +38,5 @@ while true; do
     selected_item=$(ls -A "$source_directory" | sed -n "${selection}p")
 
     # 移动文件或文件夹到目标目录，显示进度条
-    nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo 'Item moved successfully to $destination_folder_name!'" > "out_$destination_folder_name" 2>&1 &
+    nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo 'Item moved successfully to $destination_folder_name!'" > "out_$(basename "$selected_item")" 2>&1 &
 done
