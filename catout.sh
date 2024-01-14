@@ -6,11 +6,11 @@ directory="$(dirname "$0")"
 # 获取目录下所有以 "out" 开头的文件
 files=("$directory"/out*)
 
-# 显示文件列表和第一行内容
+# 显示文件列表和第二行内容
 echo "Available files:"
 
 for ((i=0; i<${#files[@]}; i++)); do
-    content=$(head -n 1 "${files[$i]}")
+    content=$(sed -n '2p' "${files[$i]}")  # 获取第二行内容
     echo "$((i+1)): ${files[$i]} \"$content\""
 done
 
@@ -28,7 +28,7 @@ while true; do
     if [ "$selection" -ge 1 ] && [ "$selection" -le "${#files[@]}" ]; then
         selected_file="${files[$((selection-1))]}"
         echo "Content of ${selected_file}:"
-        cat "$selected_file"
+        sed -n '2p' "$selected_file"  # 显示第二行内容
     else
         echo "Invalid selection. Please enter a valid file number or 'q' to quit."
     fi
