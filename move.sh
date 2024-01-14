@@ -21,8 +21,9 @@ counter=1
 while true; do
     # 显示源目录的文件和文件夹，并标上号
     echo "源目录中的文件和文件夹:"
+    files=("$source_directory"/*)
     index=1
-    for entry in "$source_directory"/*; do
+    for entry in "${files[@]}"; do
         echo "$index: $(basename "$entry")"
         ((index++))
     done
@@ -41,7 +42,7 @@ while true; do
         # 检查用户输入的编号是否在文件夹数目的范围内
         if [ "$selection" -ge 1 ] && [ "$selection" -le ${#files[@]} ]; then
             # 获取用户选择对应的文件或文件夹
-            selected_item=$(ls -A "$source_directory" | sed -n "${selection}p")
+            selected_item=$(basename "${files[$((selection-1))]}")
 
             # 移动文件或文件夹到目标目录，显示进度条
             nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo '项目成功移动到 $destination_folder_name!'"> "out$counter" 2>&1 &
