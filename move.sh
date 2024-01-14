@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 检查是否提供了目标文件夹名称参数
-if [ "$#" -ne 1 ]; then
+if [ "$#" -ne 2 ]; then
     echo "Usage: $0 <destination_folder_name>"
     exit 1
 fi
@@ -33,5 +33,5 @@ selected_item=$(ls -A "$source_directory" | sed -n "${selection}p")
 # 移动文件或文件夹到目标目录，显示进度条
 #nohup rsync -ah --progress --remove-source-files "$source_directory/$selected_item" "$destination_directory" > out 2>&1 &
 # --remove-source-files为复制文件到目标后删除源文件即移动文件
-nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo 'Item moved successfully to $destination_folder_name!'" > $2 2>&1 &
+nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo 'Item moved successfully to $destination_folder_name!'" > "$2" 2>&1 &
 #echo "Item moved successfully to $destination_folder_name!"
