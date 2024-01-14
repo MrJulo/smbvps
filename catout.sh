@@ -12,8 +12,12 @@ if [ ${#files[@]} -eq 0 ]; then
     exit 1
 fi
 
+# 显示第一个文件的内容
+echo "Content of ${files[0]}:"
+cat "${files[0]}"
+
 # 显示文件列表和第二行内容
-echo "Available files:"
+echo -e "\nAvailable files:"
 
 for ((i=0; i<${#files[@]}; i++)); do
     content=$(sed -n '2p' "${files[$i]}")  # 获取第二行内容
