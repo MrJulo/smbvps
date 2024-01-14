@@ -2,7 +2,7 @@
 
 # 检查是否提供了目标文件夹名称参数
 if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <destination_folder_name>"
+    echo "用法: $0 <目标文件夹名称>"
     exit 1
 fi
 
@@ -20,7 +20,7 @@ counter=1
 
 while true; do
     # 显示源目录的文件和文件夹，并标上号
-    echo "Files and folders in $source_directory:"
+    echo "源目录中的文件和文件夹:"
     index=1
     for entry in "$source_directory"/*; do
         echo "$index: $(basename "$entry")"
@@ -28,11 +28,11 @@ while true; do
     done
 
     # 提示用户输入要移动的项目的编号
-    read -p "Enter the number of the item you want to move, or press Enter to quit: " selection
+    read -p "输入要移动的项目的编号，或按回车退出: " selection
 
     # 检查用户是否按回车
     if [ -z "$selection" ]; then
-        echo "Exiting the script."
+        echo "退出脚本。"
         exit 0
     fi
 
@@ -44,12 +44,12 @@ while true; do
             selected_item=$(ls -A "$source_directory" | sed -n "${selection}p")
 
             # 移动文件或文件夹到目标目录，显示进度条
-            nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo 'Item moved successfully to $destination_folder_name!'"> "out$counter" 2>&1 &
+            nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo '项目成功移动到 $destination_folder_name!'"> "out$counter" 2>&1 &
             ((counter++))
         else
-            echo "Invalid selection. Please enter a valid file number."
+            echo "无效的选择，请输入有效的文件编号。"
         fi
     else
-        echo "Invalid input. Please enter a valid file number."
+        echo "无效的输入，请输入有效的文件编号。"
     fi
 done
