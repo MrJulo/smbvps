@@ -26,7 +26,7 @@ cat "${files[0]}"
 
 # 循环提示用户输入
 for ((i=1; i<${#files[@]}; i++)); do
-    read -p "Press Enter to display the next file, or enter 'q' to quit: " input
+    read -p $'\nPress Enter to display the next file, or enter "q" to quit: ' input
 
     # 检查用户是否输入退出字符
     if [ "$input" == "q" ]; then
