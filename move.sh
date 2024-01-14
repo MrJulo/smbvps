@@ -26,7 +26,7 @@ while true; do
     done
 
     # 提示用户输入要移动的项目的编号或退出字符
-    read -p "Enter the number of the item you want to move or 'q' to quit: " selection
+    read -p "Enter the number of the item you want to mov or 'q' to quit: " selection
 
     # 检查用户是否输入退出字符
     if [ "$selection" == "q" ]; then
