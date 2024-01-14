@@ -3,21 +3,21 @@
 # 设置目录为当前脚本的目录
 directory="$(dirname "$0")"
 
+# 获取目录下所有以 "out" 开头的文件
+files=("$directory"/out*)
+
+# 如果没有找到文件，给出提示并退出
+if [ ${#files[@]} -eq 0 ]; then
+    echo "在目录中找不到 'out' 文件。退出。"
+    exit 1
+fi
+
+# 直接显示第一个文件内容
+echo -e "第一个文件的内容："
+cat "${files[0]}"
+
 # 循环提示用户输入
 while true; do
-    # 获取目录下所有以 "out" 开头的文件
-    files=("$directory"/out*)
-
-    # 如果没有找到文件，给出提示并退出
-    if [ ${#files[@]} -eq 0 ]; then
-        echo "在目录中找不到 'out' 文件。退出。"
-        exit 1
-    fi
-
-    # 直接显示第一个文件内容
-    echo -e "第一个文件的内容："
-    cat "${files[0]}"
-
     # 显示文件列表和它们的第二行内容
     echo -e "\n可用文件："
     for ((i=0; i<${#files[@]}; i++)); do
