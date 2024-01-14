@@ -16,16 +16,25 @@ if [ ! -d "$destination_directory" ]; then
     mkdir -p "$destination_directory"
 fi
 
+# 指定要排除的文件夹名称
+exclude_folders=("disk-m" "disk1" "disk2" "disk3" "disk4" "disk5" "上传文件" "uploads")
+
 counter=1
 
 while true; do
-    # 显示源目录的文件和文件夹，并标上号
+    # 显示源目录的文件和文件夹，并标上号，排除指定的文件夹
     echo "源目录中的文件和文件夹:"
     files=("$source_directory"/*)
     index=1
     for entry in "${files[@]}"; do
-        echo "$index: $(basename "$entry")"
-        ((index++))
+        # 获取文件或文件夹名称
+        filename=$(basename "$entry")
+        
+        # 检查是否在排除列表中
+        if [[ ! " ${exclude_folders[@]} " =~ " $filename " ]]; then
+            echo "$index: $filename"
+            ((index++))
+        fi
     done
 
     # 提示用户输入要移动的项目的编号
