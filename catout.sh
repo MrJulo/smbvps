@@ -26,7 +26,7 @@ for ((i=0; i<${#files[@]}; i++)); do
 done
 
 # 循环提示用户输入
-for ((i=0; i<${#files[@]}; i++)); do
+while true; do
     read -p $'\nEnter a file number to display its content, or press Enter to exit: ' input
 
     # 检查用户是否按回车
