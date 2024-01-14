@@ -30,21 +30,26 @@ while true; do
     # 提示用户输入要移动的项目的编号
     read -p "Enter the number of the item you want to move, or press Enter to quit: " selection
 
-    # 检查用户是否输入编号
+    # 检查用户是否按回车
     if [ -z "$selection" ]; then
         echo "Exiting the script."
         exit 0
     fi
 
-    # 检查用户输入的编号是否有效
-    if [ "$selection" -ge 1 ] && [ "$selection" -le $index ]; then
-        # 获取用户选择对应的文件或文件夹
-        selected_item=$(ls -A "$source_directory" | sed -n "${selection}p")
+    # 检查用户输入的编号是否为数字
+    if [[ "$selection" =~ ^[0-9]+$ ]]; then
+        # 检查用户输入的编号是否在文件夹数目的范围内
+        if [ "$selection" -ge 1 ] && [ "$selection" -le ${#files[@]} ]; then
+            # 获取用户选择对应的文件或文件夹
+            selected_item=$(ls -A "$source_directory" | sed -n "${selection}p")
 
-        # 移动文件或文件夹到目标目录，显示进度条
-        nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo 'Item moved successfully to $destination_folder_name!'"> "out$counter" 2>&1 &
-        ((counter++))
+            # 移动文件或文件夹到目标目录，显示进度条
+            nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo 'Item moved successfully to $destination_folder_name!'"> "out$counter" 2>&1 &
+            ((counter++))
+        else
+            echo "Invalid selection. Please enter a valid file number."
+        fi
     else
-        echo "Invalid selection. Please enter a valid file number."
+        echo "Invalid input. Please enter a valid file number."
     fi
 done
