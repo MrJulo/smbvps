@@ -8,12 +8,12 @@ files=("$directory"/out*)
 
 # 如果没有文件，给出提示并退出
 if [ ${#files[@]} -eq 0 ]; then
-    echo "No 'out' files found in the directory. Exiting."
+    echo "在目录中找不到 'out' 文件。退出。"
     exit 1
 fi
 
-# 显示第一个文件的内容
-echo "Content of ${files[0]}:"
+# 直接显示第一个文件内容
+echo -e "Content of ${files[0]}:"
 cat "${files[0]}"
 
 # 显示文件列表和第二行内容
@@ -25,22 +25,26 @@ for ((i=0; i<${#files[@]}; i++)); do
 done
 
 # 循环提示用户输入
-while true; do
-    # 提示用户输入要查看的文件编号或回车退出
-    read -p $'\nEnter the number of the file you want to view, or press Enter to quit: ' selection
+for ((i=0; i<${#files[@]}; i++)); do
+    read -p $'\n输入文件编号以显示对应内容，按回车退出: ' input
 
-    # 检查用户是否输入编号
-    if [ -z "$selection" ]; then
-        echo "Exiting the script."
+    # 检查用户是否输入回车
+    if [ -z "$input" ]; then
+        echo "退出脚本。"
         exit 0
     fi
 
-    # 检查用户输入的编号是否有效
-    if [ "$selection" -ge 1 ] && [ "$selection" -le ${#files[@]} ]; then
-        selected_file="${files[$((selection-1))]}"
-        echo "Content of ${selected_file}:"
-        cat "$selected_file"
+    # 检查输入是否是数字
+    if [[ "$input" =~ ^[0-9]+$ ]]; then
+        index=$((input-1))
+        if [ "$index" -ge 0 ] && [ "$index" -lt ${#files[@]} ]; then
+            # 显示选择文件的内容
+            echo -e "\n${files[$index]} 的内容:"
+            cat "${files[$index]}"
+        else
+            echo "无效的文件编号，请重新输入。"
+        fi
     else
-        echo "Invalid selection. Please enter a valid file number or press Enter to quit."
+        echo "无效的输入，请输入有效的文件编号。"
     fi
 done
