@@ -29,8 +29,8 @@ while true; do
     echo -e "\e[1;33m2. 删除 rclone mount 服务\e[0m"
     echo -e "\e[1m3. 启动 rclone mount 服务\e[0m"
     echo -e "\e[1;31m4. 停止 rclone mount 服务\e[0m"
-    echo -e "\e[1m5. 输入回车退出脚本\e[0m"
-    read -p "请选择操作 [1-5]: " choice
+    echo -e "\e[1m输入回车退出脚本\e[0m"
+    read -p "请选择操作 [1-4]: " choice
 
     case $choice in
         1)
