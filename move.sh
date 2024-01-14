@@ -25,8 +25,8 @@ while true; do
     # 显示源目录的文件和文件夹，并标上号，排除指定的文件夹
     echo "源目录中的文件和文件夹:"
     files=("$source_directory"/*)
+    valid_folders=()  # 存储没有被排除的文件夹
     index=1
-    index_array=()  # 用于存储列表出来的文件的索引
     for entry in "${files[@]}"; do
         # 获取文件或文件夹名称
         filename=$(basename "$entry")
@@ -34,7 +34,7 @@ while true; do
         # 检查是否在排除列表中
         if [[ ! " ${exclude_folders[@]} " =~ " $filename " ]]; then
             echo "$index: $filename"
-            index_array+=("$index")  # 将索引添加到数组中
+            valid_folders+=("$entry")  # 将没有被排除的文件夹添加到数组中
             ((index++))
         fi
     done
@@ -51,13 +51,12 @@ while true; do
     # 检查用户输入的编号是否为数字
     if [[ "$selection" =~ ^[0-9]+$ ]]; then
         # 检查用户输入的编号是否在文件夹数目的范围内
-        if [ "$selection" -ge 1 ] && [ "$selection" -le ${#index_array[@]} ]; then
+        if [ "$selection" -ge 1 ] && [ "$selection" -le ${#valid_folders[@]} ]; then
             # 获取用户选择对应的文件或文件夹
-            selected_index=${index_array[$((selection-1))]}
-            selected_item=$(basename "${files[$((selected_index-1))]}")
-            echo "正在移动文件: $selected_item"
+            selected_item=$(basename "${valid_folders[$((selection-1))]}")
 
             # 移动文件或文件夹到目标目录，显示进度条
+            echo "正在移动文件: $selected_item"
             nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo '项目成功移动到 $destination_folder_name!'"> "out$counter" 2>&1 &
             ((counter++))
         else
