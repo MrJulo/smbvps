@@ -55,6 +55,7 @@ while true; do
             # 获取用户选择对应的文件或文件夹
             selected_index=${index_array[$((selection-1))]}
             selected_item=$(basename "${files[$((selected_index-1))]}")
+            echo "正在移动文件: $selected_item"
 
             # 移动文件或文件夹到目标目录，显示进度条
             nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo '项目成功移动到 $destination_folder_name!'"> "out$counter" 2>&1 &
