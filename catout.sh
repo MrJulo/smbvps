@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# 设置目录
-directory="/path/to/directory"
+# 设置目录为当前脚本的目录
+directory="$(dirname "$0")"
 
-# 获取目录下所有以"out"开头的文件
+# 获取目录下所有以 "out" 开头的文件
 files=("$directory"/out*)
 
 # 显示文件列表和第一行内容
