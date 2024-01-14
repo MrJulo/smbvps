@@ -42,6 +42,8 @@ while true; do
             # 显示所选文件的内容
             echo -e "\n${files[$index]} 的内容："
             cat "${files[$index]}"
+            # 添加一个换行以提高可读性
+            echo
         else
             echo "无效的文件编号。请输入有效的文件编号。"
         fi
