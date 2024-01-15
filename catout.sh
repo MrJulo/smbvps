@@ -13,8 +13,8 @@ if [ ${#files[@]} -eq 0 ]; then
 fi
 
 # 直接显示第一个文件内容
-echo -e "第一个文件的内容："
-cat "${files[0]}"
+#echo -e "第一个文件的内容："
+#cat "${files[0]}"
 
 # 循环提示用户输入
 while true; do
@@ -22,7 +22,7 @@ while true; do
     echo -e "\n可用文件："
     for ((i=0; i<${#files[@]}; i++)); do
         # 获取第二行内容
-        content=$(sed -n '2p' "${files[$i]}")
+        content=$(sed -n '1p' "${files[$i]}")
         echo "$((i+1)): ${files[$i]} \"$content\""
     done
 
