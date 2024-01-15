@@ -66,7 +66,7 @@ while true; do
 
             # 移动文件或文件夹到目标目录，显示进度条
             echo -e "\e[1;36m正在移动文件: $selected_item\e[0m"
-            nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo '项目成功移动到 $destination_folder_name!'"> "out$counter" 2>&1 &
+            nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo -e '\e[1;32m项目成功移动到 $destination_directory!\e[0m'" > "out$counter" 2>&1 &
             ((counter++))
         else
             echo "无效的选择，请输入有效的文件编号。"
