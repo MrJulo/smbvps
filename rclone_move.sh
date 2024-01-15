@@ -69,7 +69,7 @@ while true; do
         selected_item=$(basename "${files[$selected_index]}")
 
         # 使用rclone move命令移动文件夹，保持文件夹结构
-        nohup rclone move "$source_path/$selected_item" "$destination_path/$selected_item" --progress > "rclone$counter.out" 2>&1 &
+        nohup rclone move "$source_path/$selected_item" "$destination_path/$selected_item" --progress > "outp$counter" 2>&1 &
         echo "正在移动文件 $selected_item，请查看 rclone$counter.out 文件以获取详细信息。"
         ((counter++))
     else
