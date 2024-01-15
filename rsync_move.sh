@@ -22,6 +22,8 @@ if [ ! -d "$destination_directory" ]; then
     mkdir -p "$destination_directory"
 fi
 
+echo "目标目录已设置为: $destination_directory"
+
 # 指定要排除的文件夹名称
 exclude_folders=("disk-m" "disk1" "disk2" "disk3" "disk4" "disk5" "上传文件" "uploads")
 
