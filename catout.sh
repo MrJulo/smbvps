@@ -18,11 +18,11 @@ cat "${files[0]}"
 
 # 循环提示用户输入
 while true; do
-    # 显示文件列表和它们的最后一行内容
+    # 显示文件列表和它们的第二行内容
     echo -e "\n可用文件："
     for ((i=0; i<${#files[@]}; i++)); do
-        # 获取最后一行内容
-        content=$(tail -n 1 "${files[$i]}")
+        # 获取第二行内容
+        content=$(sed -n '2p' "${files[$i]}")
         echo "$((i+1)): ${files[$i]} \"$content\""
     done
 
