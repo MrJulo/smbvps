@@ -15,6 +15,9 @@ while true; do
     if [[ "$source_index" =~ ^[0-9]+$ ]] && [ "$source_index" -ge 0 ] && [ "$source_index" -lt ${#paths[@]} ]; then
         source_path="${paths[$source_index]}"
         break
+    elif [ -z "$source_index" ]; then
+        echo "退出脚本。"
+        exit 0
     else
         echo "无效的源路径编号，请重新输入。"
     fi
@@ -36,6 +39,9 @@ while true; do
     if [[ "$destination_index" =~ ^[0-9]+$ ]] && [ "$destination_index" -ge 0 ] && [ "$destination_index" -lt ${#paths[@]} ] && [ "$destination_index" -ne "$source_index" ]; then
         destination_path="${paths[$destination_index]}"
         break
+    elif [ -z "$destination_index" ]; then
+        echo "退出脚本。"
+        exit 0
     else
         echo "无效的目标路径编号，请重新输入。"
     fi
