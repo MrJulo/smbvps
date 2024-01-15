@@ -2,7 +2,7 @@
 
 # 提示用户选择源路径
 echo "选择源路径:"
-paths=("/var/lib/transmission-daemon/downloads/disk-m" "/var/lib/transmission-daemon/downloads/disk1" "/var/lib/transmission-daemon/downloads/disk2" "/var/lib/transmission-daemon/downloads/disk3" "/var/lib/transmission-daemon/downloads/disk4" "/var/lib/transmission-daemon/downloads/disk5")
+paths=("/var/lib/transmission-daemon/downloads" "/var/lib/transmission-daemon/downloads/disk1" "/var/lib/transmission-daemon/downloads/disk2" "/var/lib/transmission-daemon/downloads/disk3" "/var/lib/transmission-daemon/downloads/disk4" "/var/lib/transmission-daemon/downloads/disk5" "/var/lib/transmission-daemon/downloads/disk-m")
 
 for i in "${!paths[@]}"; do
     echo "$i: ${paths[$i]}"
