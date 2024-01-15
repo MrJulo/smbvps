@@ -9,7 +9,8 @@ select target_directory in "${options[@]}"; do
     if [[ -n "$target_directory" ]]; then
         break
     else
-        echo "无效的选择，请重新选择。"
+        echo "退出脚本。"
+        exit 0
     fi
 done
 
