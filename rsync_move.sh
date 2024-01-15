@@ -1,15 +1,21 @@
 #!/bin/bash
 
-# 检查是否提供了目标文件夹名称参数
-if [ "$#" -ne 1 ]; then
-    echo "用法: $0 <目标文件夹名称>"
-    exit 1
-fi
+# 显示可选目标目录
+echo "可选目标目录:"
+options=("disk1" "disk2" "disk3" "disk4" "disk5" "disk-m")
+PS3="选择一个目标目录编号: "
+
+select target_directory in "${options[@]}"; do
+    if [[ -n "$target_directory" ]]; then
+        break
+    else
+        echo "无效的选择，请重新选择。"
+    fi
+done
 
 # 设置源目录和目标目录
 source_directory="/var/lib/transmission-daemon/downloads"
-destination_folder_name="$1"
-destination_directory="$source_directory/$destination_folder_name"
+destination_directory="$source_directory/$target_directory"
 
 # 检查目标目录是否存在，不存在则创建
 if [ ! -d "$destination_directory" ]; then
