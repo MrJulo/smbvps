@@ -76,7 +76,7 @@ while true; do
 
         # 使用rclone move命令移动文件夹，保持文件夹结构
         nohup rclone move "$source_path/$selected_item" "$destination_path/$selected_item" --progress --quiet > "outp$counter" 2>&1 &
-        echo "正在移动文件 $selected_item，请查看 outp$counter 文件以获取详细信息。"
+        echo -e "\e[1;36m正在移动文件 $selected_item，请查看 outp$counter 文件以获取详细信息。\e[0m"
         ((counter++))
     else
         echo "无效的选择，请输入有效的文件编号。"
