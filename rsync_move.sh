@@ -1,51 +1,63 @@
 #!/bin/bash
 
-# 显示可选目标目录
-echo "可选目标目录:"
-options=("disk1" "disk2" "disk3" "disk4" "disk5" "disk-m")
-PS3="选择一个目标目录编号: "
+# 提示用户选择源路径
+echo "选择源路径:"
+paths=("/var/lib/transmission-daemon/downloads" "/var/lib/transmission-daemon/downloads/disk1" "/var/lib/transmission-daemon/downloads/disk2" "/var/lib/transmission-daemon/downloads/disk3" "/var/lib/transmission-daemon/downloads/disk4" "/var/lib/transmission-daemon/downloads/disk5" "/var/lib/transmission-daemon/downloads/disk-m")
 
-select target_directory in "${options[@]}"; do
-    if [[ -n "$target_directory" ]]; then
+for i in "${!paths[@]}"; do
+    echo "$i: ${paths[$i]}"
+done
+
+while true; do
+    read -p "输入源路径的编号: " source_index
+
+    # 检查用户输入的编号是否有效
+    if [[ "$source_index" =~ ^[0-9]+$ ]] && [ "$source_index" -ge 0 ] && [ "$source_index" -lt ${#paths[@]} ]; then
+        source_path="${paths[$source_index]}"
         break
-    else
+    elif [ -z "$source_index" ]; then
         echo "退出脚本。"
         exit 0
+    else
+        echo "无效的源路径编号，请重新输入。"
     fi
 done
 
-# 设置源目录和目标目录
-source_directory="/var/lib/transmission-daemon/downloads"
-destination_directory="$source_directory/$target_directory"
+# 提示用户选择目标路径
+echo "选择目标路径:"
+for i in "${!paths[@]}"; do
+    # 排除源路径，避免目标路径与源路径相同
+    if [ "$i" -ne "$source_index" ]; then
+        echo "$i: ${paths[$i]}"
+    fi
+done
 
-# 检查目标目录是否存在，不存在则创建
-if [ ! -d "$destination_directory" ]; then
-    mkdir -p "$destination_directory"
-fi
+while true; do
+    read -p "输入目标路径的编号: " destination_index
 
-echo "目标目录已设置为: $destination_directory"
-
-# 指定要排除的文件夹名称
-exclude_folders=("disk-m" "disk1" "disk2" "disk3" "disk4" "disk5" "上传文件" "uploads")
+    # 检查用户输入的编号是否有效
+    if [[ "$destination_index" =~ ^[0-9]+$ ]] && [ "$destination_index" -ge 0 ] && [ "$destination_index" -lt ${#paths[@]} ] && [ "$destination_index" -ne "$source_index" ]; then
+        destination_path="${paths[$destination_index]}"
+        break
+    elif [ -z "$destination_index" ]; then
+        echo "退出脚本。"
+        exit 0
+    else
+        echo "无效的目标路径编号，请重新输入。"
+    fi
+done
 
 counter=1
 
 while true; do
-    # 显示源目录的文件和文件夹，并标上号，排除指定的文件夹
-    echo "源目录中的文件和文件夹:"
-    files=("$source_directory"/*)
-    valid_folders=()  # 存储没有被排除的文件夹
+    # 列出源路径下的文件和文件夹，并标上序号
+    echo "源路径中的文件和文件夹:"
+    files=("$source_path"/*)
     index=1
     for entry in "${files[@]}"; do
-        # 获取文件或文件夹名称
         filename=$(basename "$entry")
-        
-        # 检查是否在排除列表中
-        if [[ ! " ${exclude_folders[@]} " =~ " $filename " ]]; then
-            echo "$index: $filename"
-            valid_folders+=("$entry")  # 将没有被排除的文件夹添加到数组中
-            ((index++))
-        fi
+        echo "$index: $filename"
+        ((index++))
     done
 
     # 提示用户输入要移动的项目的编号
@@ -58,20 +70,15 @@ while true; do
     fi
 
     # 检查用户输入的编号是否为数字
-    if [[ "$selection" =~ ^[0-9]+$ ]]; then
-        # 检查用户输入的编号是否在文件夹数目的范围内
-        if [ "$selection" -ge 1 ] && [ "$selection" -le ${#valid_folders[@]} ]; then
-            # 获取用户选择对应的文件或文件夹
-            selected_item=$(basename "${valid_folders[$((selection-1))]}")
+    if [[ "$selection" =~ ^[0-9]+$ ]] && [ "$selection" -ge 1 ] && [ "$selection" -le ${#files[@]} ]; then
+        selected_index=$((selection - 1))
+        selected_item=$(basename "${files[$selected_index]}")
 
-            # 移动文件或文件夹到目标目录，显示进度条
-            echo -e "\e[1;36m正在移动文件: $selected_item\e[0m"
-            nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo -e '\e[1;36m项目成功移动到 $destination_directory!\e[0m'" > "out$counter" 2>&1 &
-            ((counter++))
-        else
-            echo "无效的选择，请输入有效的文件编号。"
-        fi
+        # 使用rclone move命令移动文件夹，保持文件夹结构
+        nohup bash -c "rsync -ah --progress --remove-source-files \"$source_path/$selected_item\" \"$destination_path/$selected_item\" && echo -e '\e[1;36m项目成功移动到 $destination_directory!\e[0m'" > "out$counter" 2>&1 &
+        echo -e "\e[1;36m正在移动文件 $selected_item，请查看 outp$counter 文件以获取详细信息。\e[0m"
+        ((counter++))
     else
-        echo "无效的输入，请输入有效的文件编号。"
+        echo "无效的选择，请输入有效的文件编号。"
     fi
 done
