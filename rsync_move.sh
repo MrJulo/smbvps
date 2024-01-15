@@ -65,7 +65,7 @@ while true; do
             selected_item=$(basename "${valid_folders[$((selection-1))]}")
 
             # 移动文件或文件夹到目标目录，显示进度条
-            echo "正在移动文件: $selected_item"
+            echo -e "\e[1;36m正在移动文件: $selected_item\e[0m"
             nohup bash -c "rsync -ah --progress --remove-source-files \"$source_directory/$selected_item\" \"$destination_directory\" && echo '项目成功移动到 $destination_folder_name!'"> "out$counter" 2>&1 &
             ((counter++))
         else
