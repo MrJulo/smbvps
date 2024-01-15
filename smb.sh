@@ -256,13 +256,6 @@ else
        apt-get -y install apache2
 fi
 
-if [ -d "/var/lib/transmission-daemon/downloads" ]; 
-then
-       echo "/var/lib/transmission-daemon/downloads 已存在，无需创建"
-else  
-       mkdir /var/lib/transmission-daemon/downloads
-fi
-
 #配置域名或ip地址到servername，不然会提示警告
 echo "ServerName $1" | sudo tee -a /etc/apache2/apache2.conf > /dev/null
 
