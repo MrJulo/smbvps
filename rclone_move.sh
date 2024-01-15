@@ -72,10 +72,10 @@ while true; do
     # 检查用户输入的编号是否为数字
     if [[ "$selection" =~ ^[0-9]+$ ]] && [ "$selection" -ge 1 ] && [ "$selection" -le ${#files[@]} ]; then
         selected_index=$((selection - 1))
-        selected_item="${files[$selected_index]}"
+        selected_item=$(basename "${files[$selected_index]}")
 
         # 使用rclone move命令移动文件夹，保持文件夹结构
-        nohup rclone move "$selected_item" "$destination_path" --progress --quiet > "outp$counter" 2>&1 &
+        nohup rclone move "$source_path/$selected_item" "$destination_path/$selected_item" --progress --quiet > "outp$counter" 2>&1 &
         echo -e "\e[1;36m正在移动文件 $selected_item，请查看 outp$counter 文件以获取详细信息。\e[0m"
         ((counter++))
     else
