@@ -75,7 +75,7 @@ while true; do
         selected_item=$(basename "${files[$selected_index]}")
 
         # 移动文件或文件夹到目标路径
-        nohup bash -c "echo -e '\e[1;36m项目 $selected_item\e[0m' && rsync -ah --progress --remove-source-files \"$source_path/$selected_item\" \"$destination_path\" && echo -e '\e[1;36m项目成功移动到 $destination_path/$selected_item!\e[0m'" > "outp$counter" 2>&1 &
+        nohup bash -c "echo -e '\e[1;36m项目 $selected_item\e[0m' && rsync -ah --progress --remove-source-files \"$source_path/$selected_item\" \"$destination_path\" && echo -e '\e[1;36m项目成功移动到 $destination_path/$selected_item!\e[0m'" > "out$counter" 2>&1 &
         echo -e "\e[1;36m正在移动文件 $selected_item，请查看 outp$counter 文件以获取详细信息。\e[0m"
         ((counter++))
     else
