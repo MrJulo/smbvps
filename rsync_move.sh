@@ -74,9 +74,8 @@ while true; do
         selected_index=$((selection - 1))
         selected_item=$(basename "${files[$selected_index]}")
 
-        # 使用rclone move命令移动文件夹，保持文件夹结构
-        nohup bash -c "rsync -ah --progress --remove-source-files \"$source_path/$selected_item\" \"$destination_path/$selected_item\" && echo -e '\e[1;36m项目成功移动到 $destination_directory!\e[0m'" > "out$counter" 2>&1 &
-        echo -e "\e[1;36m正在移动文件 $selected_item，请查看 outp$counter 文件以获取详细信息。\e[0m"
+        # 移动文件或文件夹到目标路径
+        nohup bash -c "rsync -ah --progress --remove-source-files \"$source_path/$selected_item\" \"$destination_path\" && echo -e '\e[1;36m项目成功移动到 $destination_path/$selected_item!\e[0m'" > "outp$counter" 2>&1 &
         ((counter++))
     else
         echo "无效的选择，请输入有效的文件编号。"
