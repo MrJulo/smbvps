@@ -338,19 +338,3 @@ else
 fi
 
 service apache2 restart
-
-# 安装rclone及fuse用来挂载网盘
-if [ `command -v rclone` ];
-then
-       echo "rclone已经存在"
-else
-       echo "rclone不存在，开始安装"
-       apt-get install rclone
-fi
-
-if command -v dpkg &> /dev/null && dpkg -l | grep -q fuse; then
-    echo "fuse已经存在"
-else
-    echo "fuse不存在，开始安装"
-    apt install -y fuse
-fi
