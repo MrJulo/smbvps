@@ -1,8 +1,8 @@
 #!/bin/bash
 #执行文件名为$0,第一个参数为域名$1,第二个为trojan-go端口$2,第三个为trojan-go密码$3，第四个为webdav端口$4，第五个为webdav和transmission的密码$5账户默认设定smb
-apt-get update
-echo "检查证书依赖socat是否安装"
-if [ `command -v socat` ];
+apt-get update && echo "检查证书依赖socat是否安装"
+#if [ `command -v socat` ];
+if command -v socat > /dev/null;
 then
        echo "socat已经存在"
 else
