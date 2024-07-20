@@ -55,7 +55,7 @@ cat >/root/trojan/config.json <<EOF
     "local_addr": "0.0.0.0",
     "local_port": $2,
     "remote_addr": "127.0.0.1",
-    "remote_port": 9091,
+    "remote_port": $4,
     "password": [
         "$3"
     ],
